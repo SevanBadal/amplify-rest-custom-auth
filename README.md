@@ -8,6 +8,10 @@ This repository is a fork of the starter template for creating applications usin
 - run sandbox: `npx ampx sandbox --identifier rest-api --stream-function-logs`
 - run react app: `npm run dev`
 
+## Relevant Files
+- [Custom Authorizer](https://github.com/SevanBadal/amplify-rest-custom-auth/tree/373539e72c771cab3c2a5e09716c69fa322ceabc/amplify/functions/api-auth)
+- [Stack Configuration](https://github.com/SevanBadal/amplify-rest-custom-auth/blob/373539e72c771cab3c2a5e09716c69fa322ceabc/amplify/backend.ts)
+
 ## Demo
 **Fetch with token**
 ![image](https://github.com/user-attachments/assets/f4f52c3c-372e-40a6-8656-faef22401e91)
