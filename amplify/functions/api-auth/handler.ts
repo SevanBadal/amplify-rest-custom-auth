@@ -7,13 +7,29 @@ export const handler = async (
   event: APIGatewayTokenAuthorizerEvent
 ): Promise<APIGatewayAuthorizerResult> => {
   const token = event.authorizationToken?.split(" ")[1]; // expect "Bearer <token>" for example...
-  if (!token) {
-    throw new Error("Unauthorized"); // No token provided
+
+  // Add real checks here, e.g., verify issuer or claims in payload
+  if (token !== "valid-token") {
+    //  https://repost.aws/questions/QUn63V_IHYRTqynaJ034Fuxw/return-401-unauthorized-response-when-using-lambda-authorizer-with-api-gateway
+    throw "Unauthorized"; // 401
+
+    // Or return a Deny Policy which will result in a 403
+    return {
+      principalId: "unauthorized",
+      policyDocument: {
+        Version: "2012-10-17",
+        Statement: [
+          {
+            Action: "execute-api:Invoke",
+            Effect: "Deny",
+            Resource: event.methodArn,
+          },
+        ],
+      },
+    };
   }
 
-  // Add additional checks here, e.g., verify issuer or claims in payload
-
-  // Build an IAM policy allowing or denying access. Here we allow if verification passed.
+  // Build an IAM policy allowing access if verification passed
   return {
     principalId: "user-sub", // sub (user ID from token)
     policyDocument: {
